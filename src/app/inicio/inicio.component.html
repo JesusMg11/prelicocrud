@@ -1,0 +1,172 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10" style="text-align: center;">
+            <h2>CRUD</h2>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+
+    <div class="row">
+        <!-- Button trigger modal -->
+        <div style="text-align: right">
+            <button type="button" class="btn btn-success" data-mdb-toggle="modal" data-mdb-target="#modalCrear"> CREAR CUENTA </button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control buscador" placeholder="Buscar por Cuenta" [(ngModel)]="buscador"
+                  aria-describedby="basic-addon1" />
+                <span class="input-group-text bg-light" style="cursor: pointer;" id="basic-addon1" (click) = "obtenerCuentaId()"><i class="fas fa-search"></i></span>
+              </div>
+        </div>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-success" (click)="obtenerCuentas()"> LIMPIAR TABLA </button>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <!--Usuarios del sistema-->
+        <div class="table-responsive" style="text-align: center;">
+            <table class="table table-hover table-bordered order-table bg-light">
+                <thead class="table-active table-dark">
+                    <tr>
+                        <th style="font-weight: bold;">ID</th>
+                        <th style="font-weight: bold;">CUENTA</th>
+                        <th style="font-weight: bold;">ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of cuentas" style="color: black;">
+                        <td>{{item.id}}</td>
+                        <td>{{item.cuenta}}</td>
+                        <td>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button class="btn btn-primary btn-md" data-mdb-toggle="modal" data-mdb-target='#modalPut' (click) = "llenarAuxiliar(item)"
+                                    title="PUT">PUT</button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <button class="btn btn-primary btn-md" data-mdb-toggle="modal" data-mdb-target='#modalPatch' (click) = "llenarAuxiliar(item)"
+                                    title="PATCH">PATCH</button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <button class="btn btn-danger btn-md" data-mdb-toggle="modal" data-mdb-target='#modalDelete' (click) = "llenarAuxiliar(item)"
+                                    title="DELETE">DELETE</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal Agregar Cuenta-->
+<div class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="modalCrearLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h5 class="modal-title fuerte" id="modalCrearLabel">Agregar Cuenta</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-label mb-4">
+                        <input type="text" class="form-control" placeholder="00"
+                            [(ngModel)]="cuentaCrear.cuenta" name="cuenta" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" data-mdb-dismiss="modal" (click)="agregarCuenta()">CREAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Fin Modal Agregar Cuenta-->
+
+<!-- modalPut-->
+<div class="modal fade" id="modalPut" tabindex="-1" aria-labelledby="modalPutLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h5 class="modal-title fuerte" id="modalPutLabel">PUT</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-label mb-4">
+                        <input type="text" class="form-control" placeholder="00"
+                            [(ngModel)]="cuentaAuxiliar.cuenta" name="cuenta" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" data-mdb-dismiss="modal" (click)="putCuenta()">PUT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--modalPut-->
+
+<!-- modalPatch-->
+<div class="modal fade" id="modalPatch" tabindex="-1" aria-labelledby="modalPatchLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h5 class="modal-title fuerte" id="modalPatchLabel">PATCH</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-label mb-4">
+                        <input type="text" class="form-control" placeholder="00"
+                            [(ngModel)]="cuentaAuxiliar.cuenta" name="cuenta" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" data-mdb-dismiss="modal" (click)="putCuenta()">PUT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--modalPatch-->
+
+<!-- modalDelete-->
+<div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h5 class="modal-title fuerte" id="modalDeleteLabel">DELETE</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <p>¿Eliminar este registro?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" data-mdb-dismiss="modal" (click)="deleteCuenta()">DELETE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--modalDelete-->
